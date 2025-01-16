@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"context"
@@ -32,7 +32,11 @@ func moneyChannel(msg *tg.Message, client *telegram.Client, ctx context.Context)
 		} else {
 			if messageCount <= 10 && collecting {
 				if msg.Media != nil {
-					download_media(client, ctx, msg)
+					wg.Add(1)
+					go func(msg *tg.Message) {
+						defer wg.Done()
+						download_media(client, ctx, msg)
+					}(msg)
 				}
 				if strings.Contains(strings.ToLower(text), "t") {
 					caption = text

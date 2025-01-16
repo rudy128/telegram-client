@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"context"
@@ -31,7 +31,7 @@ import (
 	lj "gopkg.in/natefinch/lumberjack.v2"
 )
 
-func run(ctx context.Context) error {
+func Run(ctx context.Context) error {
 	checkAndCreateFolder(photoDIR)
 	var arg struct {
 		FillPeerStorage bool

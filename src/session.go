@@ -1,4 +1,4 @@
-package main
+package src
 
 func sessionFolder(phone string) string {
 	var out []rune

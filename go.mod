@@ -1,4 +1,4 @@
-module github.com/telegram-client
+module telegram-client
 
 go 1.23.4
 

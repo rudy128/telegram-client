@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"context"
@@ -27,8 +27,8 @@ func sendMessage(client *telegram.Client, ctx context.Context, photoPath string,
 	sender := message.NewSender(client.API()).WithUploader(u)
 
 	// Create the target input peer
-	inputPeer := &tg.InputPeerChannel{
-		ChannelID:  chatID,
+	inputPeer := &tg.InputPeerUser{
+		UserID:     chatID,
 		AccessHash: 0, // Replace with the correct access hash for the channel
 	}
 
