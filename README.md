@@ -82,6 +82,7 @@ The bot uses the following directories:
 
 ## Project Structure
 
+```
 /project-root
 ├── main.go                      # Entry point for the bot
 ├── src/                         # Source files
@@ -103,7 +104,7 @@ The bot uses the following directories:
 ├── Dockerfile.armv8             # A multi-stage Dockerfile to build and run a Go app on ARM64.
 ├── .env                         # A file for storing environment variables.
 └── README.md                    # Project documentation
-
+```
 ## Key Functions
 
 ### ```moneyChannel```
