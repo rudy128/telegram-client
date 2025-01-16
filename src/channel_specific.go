@@ -30,7 +30,7 @@ func moneyChannel(msg *tg.Message, client *telegram.Client, ctx context.Context)
 			} else {
 			}
 		} else {
-			if messageCount <= 10 && collecting {
+			if messageCount <= 4 && collecting {
 				if msg.Media != nil {
 					wg.Add(1)
 					go func(msg *tg.Message) {

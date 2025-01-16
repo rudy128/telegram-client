@@ -154,6 +154,20 @@ func Run(ctx context.Context) error {
 		if !ok {
 			return nil
 		}
+
+		// chatID, err := strconv.ParseInt(os.Getenv("RECEPTIONIST_ID"), 10, 64)
+		// if err != nil {
+		// 	return errors.Wrap(err, "parse chat id")
+		// }
+
+		// user, err := client.API().UsersGetFullUser(ctx, &tg.InputUser{
+		// 	UserID: chatID,
+		// })
+		// if err != nil {
+		// 	fmt.Println("Failed to get user info:", err)
+		// 	return err
+		// }
+		// fmt.Print(user)
 		// chat_ID, _ := extractUserID(msg.PeerID)
 		// fmt.Println("Message Received: ", msg.Message)
 		// fmt.Println("Group ID: ", chat_ID)
@@ -161,32 +175,41 @@ func Run(ctx context.Context) error {
 		// fmt.Println("")
 		// fmt.Println(msg)
 		// fmt.Println("")
-
+		// photoPath, err := getRandomFileFromDir(photoDIR)
+		// if err != nil {
+		// 	return err
+		// }
+		// wg.Add(1)
+		// fmt.Println(msg.Message)
+		// sendMessage(client, ctx, photoPath, 7496945664, caption)
+		// go findusername(api, ctx)
+		// wg.Wait()
 		moneyChannel(msg, client, ctx)
 		// c, err := storage.
 		return nil
 	})
-	// dispatcher.OnNewMessage(func(ctx context.Context, e tg.Entities, u *tg.UpdateNewMessage) error {
-	// 	// fmt.Println("New Message")
-	// 	msg, ok := u.Message.(*tg.Message)
-	// 	if !ok {
-	// 		return nil
-	// 	}
-	// 	if msg.Out {
-	// 		return nil
-	// 	}
-	// 	// Removed the outgoing message check for both incoming and outgoing messages.
-	// 	// fmt.Println("Message received:", msg.Message)
+	dispatcher.OnNewMessage(func(ctx context.Context, e tg.Entities, u *tg.UpdateNewMessage) error {
+		// fmt.Println("New Message")
+		msg, ok := u.Message.(*tg.Message)
+		if !ok {
+			return nil
+		}
+		if msg.Out {
+			return nil
+		}
+		// Removed the outgoing message check for both incoming and outgoing messages.
+		// fmt.Println("Message received:", msg.Message)
+		fmt.Println(msg)
+		fmt.Println("")
+		// Use PeerID to find peer because *Short updates does not contain any entities.
+		p, err := storage.FindPeer(ctx, peerDB, msg.GetPeerID())
+		if err != nil {
+			return err
+		}
 
-	// 	// Use PeerID to find peer because *Short updates does not contain any entities.
-	// 	p, err := storage.FindPeer(ctx, peerDB, msg.GetPeerID())
-	// 	if err != nil {
-	// 		return err
-	// 	}
-
-	// 	fmt.Printf("Peer: %s, Message: %s\n", p.User, msg.Message)
-	// 	return nil
-	// })
+		fmt.Printf("Peer: %s, Message: %s\n", p.User, msg.Message)
+		return nil
+	})
 
 	// Authentication flow handles authentication process, like prompting for code and 2FA password.
 	flow := auth.NewFlow(examples.Terminal{PhoneNumber: phone}, auth.SendCodeOptions{})

@@ -7,3 +7,4 @@ var collecting = false
 var photoDIR = "./downloads/"
 var caption = ""
 var wg sync.WaitGroup
+var username string
